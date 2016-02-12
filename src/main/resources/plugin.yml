@@ -1,0 +1,10 @@
+name: ${project.name}
+version: ${project.version}
+description: Developers API to create Guardian Beams
+author: Jaxon A Brown
+main: ${project.groupId}.${project.artifactId}
+depend: [ProtocolLib]
+commands:
+  guardianbeamapi:
+    description: View information about GuardianBeamAPI
+    aliases: [gba, guardian, beam, guardianbeam, beamapi]
