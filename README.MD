@@ -30,11 +30,11 @@ beam.setStartingPosition(newLocation);
 ```
 And all of the code is documented. Check out the [net.jaxonbrown.guardianBeam.beam package](https://github.com/MeRPG/GuardianBeamAPI/tree/master/src/main/java/net/jaxonbrown/guardianBeam/beam) for more!
 
-If you use my library for a public plugin, while the license does not require it, I respectfully ask you to credit me by linking either here, or the plugin page.
+If you use my library for a public plugin, while the license does not require it, I respectfully ask you to credit me by linking either here, or the [plugin page](https://www.spigotmc.org/resources/guardianbeamapi.18329/).
 
 Contributing
 --------
 I encourage anyone with an idea to fork this project and submit a pull request! I want this to be a community driven project, so I'd be glad to accept any PRs that meet reasonable quality standards.
 
 Contributors:
-*Jaxon Brown, Author
+* Jaxon Brown, Author
