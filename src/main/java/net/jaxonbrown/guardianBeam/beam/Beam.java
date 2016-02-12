@@ -21,12 +21,12 @@ import com.google.common.base.Preconditions;
 import net.jaxonbrown.guardianBeam.GuardianBeamAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -36,14 +36,14 @@ import java.util.UUID;
  * @author Jaxon A Brown
  */
 public class Beam {
-    private final World world;
+    private final UUID worldUID;
     private final double viewingRadiusSquared;
     private final long updateDelay;
 
     private boolean isActive;
     private final LocationTargetBeam beam;
     private Location startingPosition, endingPosition;
-    private final List<UUID> viewers;
+    private final Set<UUID> viewers;
 
     private BukkitRunnable runnable;
 
@@ -70,7 +70,7 @@ public class Beam {
         Preconditions.checkArgument(viewingRadius > 0, "viewingRadius must be positive");
         Preconditions.checkArgument(updateDelay >= 1, "viewingRadius must be a natural number");
 
-        this.world = startingPosition.getWorld();
+        this.worldUID = startingPosition.getWorld().getUID();
         this.viewingRadiusSquared = viewingRadius * viewingRadius;
         this.updateDelay = updateDelay;
 
@@ -78,7 +78,7 @@ public class Beam {
         this.beam = new LocationTargetBeam(startingPosition, endingPosition);
         this.startingPosition = startingPosition;
         this.endingPosition = endingPosition;
-        this.viewers = new ArrayList<>();
+        this.viewers = new HashSet<>();
     }
 
     /**
@@ -102,7 +102,7 @@ public class Beam {
         this.isActive = false;
         for(UUID uuid : viewers) {
             Player player = Bukkit.getPlayer(uuid);
-            if(player != null && player.getWorld().equals(this.world) && isCloseEnough(player.getLocation())) {
+            if(player != null && player.getWorld().getUID().equals(this.worldUID) && isCloseEnough(player.getLocation())) {
                 this.beam.cleanup(player);
             }
         }
@@ -116,16 +116,16 @@ public class Beam {
      * @param location the starting position.
      */
     public void setStartingPosition(Location location) {
-        Preconditions.checkArgument(location.getWorld().equals(this.world), "location must be in the same world as this beam");
+        Preconditions.checkArgument(location.getWorld().getUID().equals(this.worldUID), "location must be in the same world as this beam");
 
         this.startingPosition = location;
-        for(int i = 0; i < this.viewers.size(); i++) {
-            UUID uuid = this.viewers.get(i);
+        Iterator<UUID> iterator = this.viewers.iterator();
+        while(iterator.hasNext()) {
+            UUID uuid = iterator.next();
             Player player = Bukkit.getPlayer(uuid);
 
-            if(player == null || !player.isOnline() || !player.getWorld().equals(this.world) || !isCloseEnough(player.getLocation())) {
-                this.viewers.remove(i);
-                i--;
+            if(player == null || !player.isOnline() || !player.getWorld().getUID().equals(this.worldUID) || !isCloseEnough(player.getLocation())) {
+                iterator.remove();
                 continue;
             }
 
@@ -138,22 +138,21 @@ public class Beam {
      * @param location the ending position.
      */
     public void setEndingPosition(Location location) {
-        Preconditions.checkArgument(location.getWorld().equals(this.world), "location must be in the same world as this beam");
+        Preconditions.checkArgument(location.getWorld().getUID().equals(this.worldUID), "location must be in the same world as this beam");
 
         this.endingPosition = location;
-        for(int i = 0; i < this.viewers.size(); i++) {
-            UUID uuid = this.viewers.get(i);
+        Iterator<UUID> iterator = this.viewers.iterator();
+        while(iterator.hasNext()) {
+            UUID uuid = iterator.next();
             Player player = Bukkit.getPlayer(uuid);
 
-            if(!player.isOnline() || !player.getWorld().equals(this.world) || !isCloseEnough(player.getLocation())) {
-                this.viewers.remove(i);
-                i--;
+            if(!player.isOnline() || !player.getWorld().getUID().equals(this.worldUID) || !isCloseEnough(player.getLocation())) {
+                iterator.remove();
                 continue;
             }
 
             this.beam.setEndingPosition(player, location);
         }
-
     }
 
     /**
@@ -164,7 +163,7 @@ public class Beam {
             for(Player player : Bukkit.getOnlinePlayers()) {
                 UUID uuid = player.getUniqueId();
 
-                if(!player.getWorld().equals(this.world)) {
+                if(!player.getWorld().getUID().equals(this.worldUID)) {
                     this.viewers.remove(uuid);
                 }
 

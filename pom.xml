@@ -4,7 +4,7 @@
     <groupId>net.jaxonbrown.guardianBeam</groupId>
     <artifactId>GuardianBeamAPI</artifactId>
     <packaging>jar</packaging>
-    <version>0.2</version>
+    <version>0.3</version>
     <name>GuardianBeamAPI</name>
     <url>https://github.com/MeRPG/GuardianBeamAPI</url>
     <properties>

@@ -20,9 +20,10 @@ package net.jaxonbrown.guardianBeam.beam;
 import com.google.common.base.Preconditions;
 import net.jaxonbrown.guardianBeam.GuardianBeamAPI;
 import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.UUID;
 
 /**
  * Creates a guardian beam between two locations.
@@ -31,7 +32,7 @@ import org.bukkit.scheduler.BukkitRunnable;
  * @author Jaxon A Brown
  */
 public class ClientBeam {
-    private final World world;
+    private final UUID worldUID;
     private final double viewingRadiusSquared;
     private final long updateDelay;
 
@@ -70,7 +71,7 @@ public class ClientBeam {
         Preconditions.checkArgument(viewingRadius > 0, "viewingRadius must be positive");
         Preconditions.checkArgument(updateDelay >= 1, "viewingRadius must be a natural number");
 
-        this.world = startingPosition.getWorld();
+        this.worldUID = startingPosition.getWorld().getUID();
         this.viewingRadiusSquared = viewingRadius * viewingRadius;
         this.updateDelay = updateDelay;
 
@@ -116,7 +117,7 @@ public class ClientBeam {
      * @param location the starting position.
      */
     public void setStartingPosition(Location location) {
-        Preconditions.checkArgument(location.getWorld().equals(this.world), "location must be in the same world as this beam");
+        Preconditions.checkArgument(location.getWorld().getUID().equals(this.worldUID), "location must be in the same world as this beam");
         Preconditions.checkState(this.player != null && !this.player.isOnline(), "The player must be online");
 
         this.startingPosition = location;
@@ -128,7 +129,7 @@ public class ClientBeam {
      * @param location the ending position.
      */
     public void setEndingPosition(Location location) {
-        Preconditions.checkArgument(location.getWorld().equals(this.world), "location must be in the same world as this beam");
+        Preconditions.checkArgument(location.getWorld().getUID().equals(this.worldUID), "location must be in the same world as this beam");
         Preconditions.checkState(this.player != null && !this.player.isOnline(), "The player must be online");
 
         this.endingPosition = location;
@@ -143,7 +144,7 @@ public class ClientBeam {
             stop();
         }
         if(this.isActive) {
-            if(!this.player.getWorld().equals(this.world)) {
+            if(!this.player.getWorld().getUID().equals(this.worldUID)) {
                 stop();
             }
 
