@@ -2,7 +2,9 @@ GuardianBeamAPI
 ===========
 ![GuardianBeamAPI Image Credit ArcLumX](http://i.imgur.com/oWfQVvg.png)
 
-An easy solution for manipulating Guardian's beams in Spigot 1.8!
+An easy solution for manipulating Guardian's beams in Spigot 1.9!
+
+NOTE! 1.9 support is not included in this push. See the 1.8 branch. 1.9 support is coming soon!
 
 What is GuardianBeamAPI?
 --------
