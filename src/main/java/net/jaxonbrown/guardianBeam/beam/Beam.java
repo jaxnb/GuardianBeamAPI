@@ -165,6 +165,7 @@ public class Beam {
 
                 if(!player.getWorld().getUID().equals(this.worldUID)) {
                     this.viewers.remove(uuid);
+                    return;
                 }
 
                 if(isCloseEnough(player.getLocation())) {
