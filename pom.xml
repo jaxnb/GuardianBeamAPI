@@ -4,7 +4,7 @@
     <groupId>net.jaxonbrown.guardianBeam</groupId>
     <artifactId>GuardianBeamAPI</artifactId>
     <packaging>jar</packaging>
-    <version>0.9</version>
+    <version>1.2</version>
     <name>GuardianBeamAPI</name>
     <url>https://github.com/MeRPG/GuardianBeamAPI</url>
     <properties>
@@ -49,12 +49,12 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.8.8-R0.1-SNAPSHOT</version>
+            <version>1.12-R0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.comphenix.protocol</groupId>
-            <artifactId>ProtocolLib</artifactId>
-            <version>3.6.4</version>
+            <artifactId>ProtocolLib-API</artifactId>
+            <version>4.3.0</version>
         </dependency>
     </dependencies>
 
@@ -65,7 +65,7 @@
         </repository>
         <repository>
             <id>dmulloy2-repo</id>
-            <url>http://repo.dmulloy2.net/content/groups/public/</url>
+            <url>http://repo.dmulloy2.net/nexus/repository/public/</url>
         </repository>
     </repositories>
 </project>
