@@ -2,6 +2,11 @@ GuardianBeamAPI
 ===========
 ![GuardianBeamAPI Image Credit ArcLumX](http://i.imgur.com/oWfQVvg.png)
 
+THIS PROJECT IS ABANDONED. Anybody wishing to continue work on this library and to distribute it in any way is free to do so, so long as they comply with the terms of the MIT license.
+
+
+
+
 An easy solution for manipulating Guardian's beams in Spigot 1.9!
 
 NOTE! 1.9 support is not included in this push. See the 1.8 branch. 1.9 support is coming soon!
