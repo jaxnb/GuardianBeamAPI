@@ -28,33 +28,43 @@ import java.lang.reflect.InvocationTargetException;
  * @author Jaxon A Brown
  */
 public class WrappedBeamPacket {
-    private final PacketContainer handle;
 
-    /**
-     * Wraps the packet.
-     * @param container packet to wrap.
-     */
-    public WrappedBeamPacket(PacketContainer container) {
-        this.handle = container;
-    }
+	private final WrapperPlayServerEntityMetadata metadata;
+	private final PacketContainer handle;
 
-    /**
-     * Sends the packet to a lucky receiver!
-     * @param receiver player to send the packet to.
-     */
-    public void send(Player receiver) {
-        try {
-            ProtocolLibrary.getProtocolManager().sendServerPacket(receiver, this.handle);
-        } catch(InvocationTargetException ex) {
-            throw new RuntimeException("Failed to send beam packet to player.", ex);
-        }
-    }
+	/**
+	 * Wraps the packet.
+	 * @param container packet to wrap.
+	 */
+	public WrappedBeamPacket(PacketContainer container) {
+		this(container, null);
+	}
 
-    /**
-     * Get the packet container.
-     * @return ProtocolLib packet container.
-     */
-    public PacketContainer getHandle() {
-        return this.handle;
-    }
+	public WrappedBeamPacket(PacketContainer container, WrapperPlayServerEntityMetadata metadata) {
+		this.metadata = metadata;
+		this.handle = container;
+	}
+
+	/**
+	 * Sends the packet to a lucky receiver!
+	 * @param receiver player to send the packet to.
+	 */
+	public void send(Player receiver) {
+		try {
+			ProtocolLibrary.getProtocolManager().sendServerPacket(receiver, this.handle);
+			if (metadata != null)
+				metadata.sendPacket(receiver);
+		} catch(InvocationTargetException ex) {
+			throw new RuntimeException("Failed to send beam packet to player.", ex);
+		}
+	}
+
+	/**
+	 * Get the packet container.
+	 * @return ProtocolLib packet container.
+	 */
+	public PacketContainer getHandle() {
+		return this.handle;
+	}
+
 }
